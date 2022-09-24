@@ -11,10 +11,16 @@ const [current,setCurrent] = useState('');
 const [external,setExternal] = useState('');
 
 
+const ct = require('countries-and-timezones');
+
+
+
 const [vpn,setVpn] = useState(null);
 
 
-const url = 'https://api.ipgeolocation.io/timezone?apiKey=fc7b5b8f8bea481487222550f39fe933&tz=';
+// const ks = "fc7b5b8f8bea481487222550f39fe933&tz=";
+
+const url = 'https://api.ipgeolocation.io/timezone?apiKey=acf89db8a6f64fb8a33f27c13086a2cc';
 
 
 const timezone = async (url) => {
@@ -76,22 +82,26 @@ function determineIps(){
 }
 
 
-// function getStartup(data,systemTimezone){
+function getStartup(data,systemTimezone){
 
 
-//   if(data === systemTimezone){
-//     console.log("COUNRY CHECKER",data,systemTimezone);
-//   }else{
+  if(data === systemTimezone){
+    return true
+  }else{
     
-//     console.log("COUNRY CHECKER",data,systemTimezone);
+    return false
+
+  }
+
+}
 
 
-//   }
-
-// }
+const machine = Intl.DateTimeFormat().resolvedOptions().timeZone
 
 
-// const machine = Intl.DateTimeFormat().resolvedOptions().timeZone
+const timezonezz = ct.getCountryForTimezone(machine);
+
+
 
 
 
@@ -116,10 +126,26 @@ return (
     <div className="App">
      
     {vpn && <div>
+
+      {vpn.geo.ip === external ? getStartup(vpn.geo. country_code2,timezonezz.id) ? <div>
+
+
+          <h1>NO VPN DETECTED</h1>
+          <h1>Current Ip Address is  {external}</h1>
+
+
+
+      </div>:<h1>Vpn DETECTED , VPN IP IS {vpn.geo.ip}</h1>:<div>
+        
+            <h1>Current Ip Address is  {external}</h1>
+            <h1>Vpn DETECTED , VPN IP IS {vpn.geo.ip}</h1>
+
+        
+         </div> }
       
-       {current && <h1>Current Ip Address is  {external}</h1>}
+       {/* {current && <h1>Current Ip Address is  {external}</h1>}
      
-   {vpn.geo.ip === external ? <h1>NO VPN DETECTED</h1> : <h1>Vpn DETECTED , VPN IP IS {vpn.geo.ip}</h1> }
+   {vpn.geo.ip === external ? <h1>NO VPN DETECTED</h1> : <h1>Vpn DETECTED , VPN IP IS {vpn.geo.ip}</h1> } */}
       
       </div>}
    
